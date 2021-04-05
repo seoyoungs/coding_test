@@ -45,16 +45,33 @@
 DD.W..
 ......
 '''
-# 크기가 R×C인 목장이 있고, 목장은 1×1 크기
-### 책- 음료수 얼려먹기와 비슷
+R, C = map(int, input().split())
+Map = [list(input()) for _ in range(R)]
 
-n,m = map(int, input().split())
+dx, dy = [-1, 0, 1, 0], [0, -1, 0, 1]
 
+ck = False
 
+#for문으로 R, C 반복문 생성
+for i in range(R):
+    for j in range(C):
+        if Map[i][j] == 'W': # 'W'는 늑대가 나오면
+            for w in range(4): # 상화좌우
+                ii, jj = i + dx[w], j + dy[w]
+                if ii < 0 or ii == R or jj < 0 or jj == C:
+                    continue
+                if Map[ii][jj] =='S': # 양이 있는 칸
+                    ck = True 
 
-
-
-
-
+if ck:
+    print(0) # 울타리를 어떻게 설치해도 늑대가 양이 있는 칸으로 갈 수 있다면
+else:
+    print(1)
+    for i in range(R): # 두번째 줄부터는 R에 목장상태 주어짐
+        for j in range(C):
+            if Map[i][j] not in 'SW':
+                Map[i][j] = 'D'
+    for i in Map:
+        print(''.join(i))
 
 
